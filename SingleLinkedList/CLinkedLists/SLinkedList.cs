@@ -4,22 +4,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SingleLinkedList.CLinkedLists
+namespace SingleLinkedList
 {
-    class SLinkedList
+   public class SLinkedList<T>
     {
-       CustomNode head;
-        CustomNode current;
-        public string data;
+       CustomNode<T> head;
+        CustomNode<T> current;
+        public T data;
         int nodeCount;
-        List<string> nextlist;
+        List<T> nextlist;
 
-        public void appendNode(string data)
+        public void appendNode(T data)
         {
             // if the list is empty make a node call it head
             if(head == null)
             {
-                head = new CustomNode(data);
+                head = new CustomNode<T>(data);
                 nodeCount++;
                 return;
             }
@@ -31,21 +31,21 @@ namespace SingleLinkedList.CLinkedLists
                     current = current.Next;   
             }
 
-            current.Next = new CustomNode(data);
+            current.Next = new CustomNode<T>(data);
 
         }
 
-        public void prepend(string data)
+        public void prepend(T data)
         {
             if (head == null)
             {
-                head=new CustomNode(data);
+                head=new CustomNode<T>(data);
                 nodeCount++;
             }
 
             else
             {
-                CustomNode newHead = new CustomNode(data);
+                CustomNode<T> newHead = new CustomNode<T>(data);
                 nodeCount++;
                 newHead.Next = head;
                 head = newHead;
@@ -55,7 +55,7 @@ namespace SingleLinkedList.CLinkedLists
 
         }
 
-        public void deteleWithData(string data)
+        public void deteleWithData(T data)
         {
             //Check if the list exists 
             if (head==null)
@@ -92,66 +92,84 @@ namespace SingleLinkedList.CLinkedLists
            
         }
 
-        public void applyProfanityFilter(string data)
-        {
+        //public void applyProfanityFilter(T data)
+        //{
 
-            if (head == null)
-            {
-                MessageBox.Show("No list to clean ");
-                return;
-            }
+        //    if (head == null)
+        //    {
+        //        MessageBox.Show("No list to clean ");
+        //        return;
+        //    }
 
-            
 
-            if (head.data.Contains(data))
-            {
-                string replaceString = head.data.Replace(data,"*****");
-                head.data = replaceString;
-                MessageBox.Show(head.data);
-                
-  
-            }
 
-            current =head;
+            //if (head.data.Contains(data))
+            //{
+            //    string replaceString = head.data.Replace(data, "*****");
+            //    head.data = replaceString;
+            //    MessageBox.Show(head.data);
 
-            while (current.Next!=null)
-            {
-                current = current.Next;
-                if (current.data.Contains(data))
-                {
-                    string replaceString = current.data.Replace(data, "*****");
-                    current.data = replaceString;
-                    MessageBox.Show(current.data);
-                 
-                }
-            }
 
-            MessageBox.Show("No swearwords in here !");
+            //}
 
-        }
+        //    current = head;
 
-        public void insertAfter(string nodeData,string searchData)
+        //    while (current.Next != null)
+        //    {
+        //        current = current.Next;
+        //        if (current.data.Contains(data))
+        //        {
+        //            string replaceString = current.data.Replace(data, "*****");
+        //            current.data = replaceString;
+        //            MessageBox.Show(current.data);
+
+        //        }
+        //    }
+
+        //    MessageBox.Show("No swearwords in here !");
+
+        //}
+
+        public void insertAfter(T nodeData, T searchData)
         {
             if (head == null)
             {
                 MessageBox.Show("There is no linst you nana");
             }
 
-            if(head.data.Contains(searchData))
+            if (head.data.Equals(searchData))
             {
-                CustomNode insertNode = new CustomNode(nodeData);
+                CustomNode<T> insertNode = new CustomNode<T>(nodeData);
                 insertNode.Next = head.Next;
                 head.Next = insertNode;
 
-                
+
+            }
+
+            current = head;
+
+            while (current.Next != null)
+            {
+                current = current.Next;
+
+                if (current.data.Equals(searchData))
+                {
+                    CustomNode<T> insertNode = new CustomNode<T>(nodeData);
+                    insertNode.Next = current.Next;
+                    current.Next = insertNode;
+
+
+                }
+
+
             }
 
 
         }
 
-        public List<string> showNext()
+        public List<T> showNext()
         {
-            nextlist = new List<string>();
+            nextlist = new List<T>();
             current = head;
 
             nextlist.Add(current.data);
